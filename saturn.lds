@@ -22,12 +22,10 @@ SECTIONS
 		*(.data)
 	} : text
 
-	/* Reserve heap */
+	/* Stack reservation. TBD: derive stack size from global config */
 	. = ALIGN(1 << 12);
-	.heap (NOLOAD):
-	{
-		*(.heap)
-	}
+	_stack = .;
+	. = . + 0x1000;
 
 	/* Align BSS start by page border to speed up flush */
 	. = ALIGN(1 << 12);
@@ -38,7 +36,7 @@ SECTIONS
 		*(.bss)
 	} :text
 
-	/* Align BSS end by 8-bytes border (see head.S for more details) */
+	/* Align BSS end by 8-bytes border */
 	. = ALIGN(1 << 3);
 	_bss_end = .;
 

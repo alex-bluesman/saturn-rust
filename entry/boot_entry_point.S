@@ -16,10 +16,12 @@
 start:
 	msr     DAIFSet, 0xf
 
-	mov	x0, 0x7a000000
+	ldr	x0, =_stack
+	mov	x1, #4096	// TBD: derivce stack size from global config
+	add	x0, x0, x1
 	mov	sp, x0
 
 	early_uart_init()
-	early_print("Boot entry reached!\r\n")
+	early_print("= Project Saturn 2025 =\r\n")
 
 	b _start_rust_kernel

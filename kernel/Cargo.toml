@@ -8,6 +8,10 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
+buddy_system_allocator = "0.11.0"
+
+#[features]
+#default = ["nightly"]
 
 [profile.dev]
 panic="abort"
