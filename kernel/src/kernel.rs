@@ -10,13 +10,19 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-#![no_main]
-#![no_std]
+const PL011_REG_BASE: usize = 0x0900_0000;
+const PL011_REG_DR: usize = 0x00;
 
-mod kernel;
-mod panic;
+static LOGO: &[u8] = b"start kernel...\r\n";
 
-#[no_mangle]
-extern "C" fn _start_rust_kernel() -> ! {
-    kernel::init();
+pub(crate) fn init() -> ! {
+    let dr = (PL011_REG_BASE + PL011_REG_DR) as *mut u8;
+
+    for c in LOGO {
+        unsafe {
+            dr.write_volatile(*c);
+        }
+    }
+
+    loop {}
 }

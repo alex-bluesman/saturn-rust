@@ -10,13 +10,9 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-#![no_main]
-#![no_std]
+use core::panic::PanicInfo;
 
-mod kernel;
-mod panic;
-
-#[no_mangle]
-extern "C" fn _start_rust_kernel() -> ! {
-    kernel::init();
+#[panic_handler]
+fn panic(_panic: &PanicInfo) -> ! {
+    loop {}
 }
