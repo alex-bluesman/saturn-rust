@@ -10,18 +10,9 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-#include "early_print/api.inc"
+use core::panic::PanicInfo;
 
-.global start
-start:
-	msr     DAIFSet, 0xf
-
-	ldr	x0, =_stack
-	mov	x1, #4096	// TBD: derivce stack size from global config
-	add	x0, x0, x1
-	mov	sp, x0
-
-	early_uart_init()
-	early_print("= Project Saturn 2025 =\r\n")
-
-	b _start_rust_kernel
+#[panic_handler]
+fn panic(_panic: &PanicInfo) -> ! {
+    loop {}
+}
