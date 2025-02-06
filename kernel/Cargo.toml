@@ -8,10 +8,11 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
+anyhow = { version = "1.0", default-features = false }
 buddy_system_allocator = "0.11.0"
-
-#[features]
-#default = ["nightly"]
+conquer-once = { version = "0.4.0", default-features = false }
+log = "0.4.17"
+spinning_top = "0.3.0"
 
 [profile.dev]
 panic="abort"
